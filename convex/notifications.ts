@@ -1,0 +1,61 @@
+import { v } from "convex/values";
+import { mutation, query } from "./_generated/server";
+import { getAuthenticatedUser } from "./users";
+
+export const getNotifications = query({
+  handler: async (ctx) => {
+    const currentUser = await getAuthenticatedUser(ctx);
+
+    const notifications = await ctx.db
+      .query("notifications")
+      .withIndex("by_receiver", (q) => q.eq("receiverId", currentUser._id))
+      .order("desc")
+      .collect();
+
+    const notificationsWithInfo = await Promise.all(
+      notifications.map(async (notification) => {
+        const sender = (await ctx.db.get(notification.senderId))!; //! is for never null status
+        let post = null;
+        let comment = null;
+
+        if (notification.postId) {
+          post = await ctx.db.get(notification.postId);
+        }
+
+        if (notification.type === "comment" && notification.commentId) {
+          comment = await ctx.db.get(notification.commentId);
+        }
+
+        return {
+          ...notification,
+          sender: {
+            _id: sender._id,
+            username: sender.username,
+            image: sender.image,
+          },
+          post,
+          comment: comment?.content,
+        };
+      })
+    );
+
+    return notificationsWithInfo;
+  },
+});
+
+
+export const deleteNotification = mutation({
+  args: { notificationId: v.id("notifications") },
+  handler: async (ctx, args) => {
+    const currentUser = await getAuthenticatedUser(ctx);
+    const notification = await ctx.db.get(args.notificationId);
+
+    if (!notification) throw new Error("Notification not found");
+
+    if (!currentUser || currentUser._id.toString() !== notification.receiverId.toString()) {
+      throw new Error("Not authorized to delete this notification");
+    }
+
+    await ctx.db.delete(args.notificationId);
+  },
+});

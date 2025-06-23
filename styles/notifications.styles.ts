@@ -12,10 +12,12 @@ export const styles = StyleSheet.create({
     paddingVertical: 12,
     borderBottomWidth: 0.5,
     borderBottomColor: COLORS.surface,
+    
   },
   headerTitle: {
-    fontSize: 24,
-    fontFamily: "JetBrainsMono-Medium",
+    fontSize: 30,
+    letterSpacing: 1,
+    fontFamily: "ShadowsIntoLight",
     color: COLORS.primary,
   },
   listContainer: {
@@ -83,5 +85,8 @@ export const styles = StyleSheet.create({
   centered: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  notificationCard: {
+    opacity: 80
   },
 });

@@ -175,7 +175,7 @@ export const styles = StyleSheet.create({
   },
   commentUsername: {
     color: COLORS.white,
-    fontWeight: "500",
+    fontWeight: "700",
     marginBottom: 4,
   },
   commentText: {

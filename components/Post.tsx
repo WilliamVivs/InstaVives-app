@@ -2,7 +2,7 @@ import { COLORS } from "@/constants/theme";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { Ionicons } from "@expo/vector-icons";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { formatDistanceToNow } from "date-fns";
 import { Image } from "expo-image";
 import { Link } from 'expo-router';
@@ -10,6 +10,7 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from "../styles/feed.styles";
 import CommentsModal from "./CommentsModal";
+import { useUser } from "@clerk/clerk-expo";
 
 type PostProps = {
   post: {
@@ -37,12 +38,26 @@ export default function Post({post}:PostProps) {
     const [showComments,setShowComments] = useState(false);
     const [isBookmarked, setIsBookmarked] = useState(post.isBookmarked)
 
+    const {user} = useUser(); // user in clerk
+    const currentUser = useQuery(api.users.getUserByClerkId,user ? {clerkId:user?.id} : "skip"); //user in db
+
     const toggleLike = useMutation(api.posts.toggleLike)
     const toggleBookmark = useMutation(api.bookmarks.toggleBookmark);
+    const deletePost = useMutation(api.posts.deletePost);
 
     const handleNewComment = () => {
       setCommentsCount(prev => prev + 1);
     };
+
+    const handleDelete = async () => {
+      try {
+        await deletePost({postId: post._id});
+      } catch (error) {
+        console.error("Error deleting post: ",error);
+        
+        
+      }
+    }
 
     const handleLike = async () => {
         try {
@@ -79,14 +94,17 @@ export default function Post({post}:PostProps) {
                     <Text style={styles.postUsername}>{post.author.username}</Text>
                 </TouchableOpacity>
             </Link>
-            {/* if i'm the owner of the post, show the delete button  */}
-            {/* <TouchableOpacity>
-                <Ionicons name="ellipsis-horizontal" size={20} color={COLORS.white}/>
-            </TouchableOpacity> */}
 
-            <TouchableOpacity>
+
+            {post.author._id === currentUser?._id ? (
+              <TouchableOpacity onPress={handleDelete}>
                 <Ionicons name="trash-outline" size={20} color={COLORS.primary}/>
             </TouchableOpacity>
+            ) : (
+              <TouchableOpacity>
+                <Ionicons name="ellipsis-horizontal" size={20} color={COLORS.white}/>
+            </TouchableOpacity>
+            )}
         </View>
         <Image
             source={post.imageUrl}

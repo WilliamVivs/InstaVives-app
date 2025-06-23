@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.background,
   },
-  header: {
+  header: { 
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
@@ -89,7 +89,7 @@ export const styles = StyleSheet.create({
   },
   editButton: {
     flex: 1,
-    backgroundColor: COLORS.surface,
+    backgroundColor: COLORS.primary,
     padding: 8,
     borderRadius: 8,
     alignItems: "center",
@@ -100,7 +100,7 @@ export const styles = StyleSheet.create({
     fontSize: 14,
   },
   shareButton: {
-    backgroundColor: COLORS.surface,
+    backgroundColor: COLORS.primary,
     padding: 8,
     borderRadius: 8,
     aspectRatio: 1,

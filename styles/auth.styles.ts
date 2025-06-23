@@ -23,7 +23,7 @@ export const styles = StyleSheet.create({
   },
   appName: {
     fontSize: 42,
-    fontWeight: "700",
+    fontWeight: "600",
     fontFamily: "ShadowsIntoLight",
     color: COLORS.primary,
     letterSpacing: 0.5,

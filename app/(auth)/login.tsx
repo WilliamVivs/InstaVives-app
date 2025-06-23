@@ -43,7 +43,7 @@ export default function login() {
             <View style={styles.logoContainer}>
                 <Ionicons name="images" size={32} color={COLORS.primary} />
             </View>
-            <Text style={styles.appName}>instavives</Text>
+            <Text style={styles.appName}>Instavives</Text>
             <Text style={styles.tagline}>Share your favorite moments</Text>
             
         </View>
