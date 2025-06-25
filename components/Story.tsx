@@ -1,14 +1,17 @@
+import { Id } from '@/convex/_generated/dataModel';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "../styles/stories.styles";
 import StoriesModal from "./StoriesModal";
 
-type StoryType = {
-  id: string;
+export type StoryType = {
+  id: Id<"stories">;
+  userId: Id<"users">;
   username: string;
-  avatar: string;
+  avatar?: string;
   hasStory: boolean;
+  mediaUrl: string;
 };
 
 type Props = {

@@ -1,3 +1,4 @@
+import { COLORS } from "@/constants/theme";
 import { Dimensions, StyleSheet } from "react-native";
 
 const {width, height} = Dimensions.get("window");
@@ -9,7 +10,7 @@ export const styles = StyleSheet.create({
   },
   storyRing: {
     borderWidth: 2,
-    borderColor: "#FF4E4E",
+    borderColor: COLORS.primary,
     borderRadius: 50,
     padding: 2,
   },
@@ -30,6 +31,7 @@ export const styles = StyleSheet.create({
     fontSize: 12,
     color: "white",
     textAlign: "center",
+    maxWidth: 78
   },
   // Styles del modal de historias
   storyModalContainer: {
@@ -38,23 +40,17 @@ export const styles = StyleSheet.create({
     backgroundColor: "black",
     justifyContent: "center",
     alignItems: "center",
+    position: "absolute",
   },
   storyModalImage: {
     width: "100%",
     height: "100%",
-    resizeMode: "cover",
+    resizeMode: "contain",
+    borderRadius: 10,
   },
-  storyModalUsername: {
+  trashButton: {
     position: "absolute",
-    top: 50,
-    left: 20,
-    color: "white",
-    fontSize: 16,
-    fontWeight: "bold",
-  },
-  closeButton: {
-    position: "absolute",
-    top: 40,
+    bottom: 40,
     right: 20,
     zIndex: 10,
     padding: 8,
@@ -124,4 +120,27 @@ export const styles = StyleSheet.create({
     color: 'red',
     marginTop: 8,
   },
+  insideStoryAvatar: {
+    borderRadius:50,
+    width: 30,
+    height: 30,
+  },
+    insideStoryHeader: {
+    marginTop: 120,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center", // <-- Añade esto
+    width: "100%",        // <-- Añade esto para ocupar todo el ancho
+    paddingHorizontal: 16, // Opcional: para separar de los bordes
+    gap: 12,
+  },
+  storyModalUsername: {
+  color: "white",
+  fontSize: 16,
+  fontWeight: "bold",
+  // Elimina position, top, left si estaban
+  },
+  closeButton: {
+    color: COLORS.primary
+  }
 });

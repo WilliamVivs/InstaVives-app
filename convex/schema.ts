@@ -65,7 +65,6 @@ export default defineSchema({
   stories: defineTable({
     userId: v.id("users"),
     mediaUrl: v.string(),
-    // mediaType: v.union(v.literal("image"), v.literal("video")),
     createdAt: v.number(),
     // expiresAt: v.number(),
     storageId: v.id("_storage"),

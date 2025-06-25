@@ -1,21 +1,19 @@
+import { COLORS } from "@/constants/theme";
+import { api } from "@/convex/_generated/api";
+import { useUser } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useMutation, useQuery } from "convex/react";
 import { useEffect, useRef, useState } from "react";
-import { Image, Modal, Text, TouchableOpacity, View } from "react-native";
+import { Image, Modal, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "../styles/stories.styles";
-import Story from "./Story";
-
-type Story = {
-  id: string;
-  username: string;
-  avatar: string;
-  hasStory: boolean;
-};
+import { Loader } from "./Loader";
+import { StoryType } from "./Story";
 
 type Props = {
   visible: boolean;
   onClose: () => void;
-  stories: Story[];
+  stories: StoryType[];
   currentIndex: number;
   setCurrentIndex: (index: number) => void;
   triggerRefresh: () => void;
@@ -23,7 +21,30 @@ type Props = {
 
 export default function StoriesModal({ visible, onClose, stories, currentIndex, setCurrentIndex,triggerRefresh  }: Props) {
     const [progress, setProgress] = useState(0);
+    const [isClosePressed, setIsClosePressed] = useState(false);
+    const [isTrashPressed, setIsTrashPressed] = useState(false);
+
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const deleteStory = useMutation(api.stories.deleteStory);
+    const { user } = useUser();
+    const currentUser = useQuery(api.users.getUserByClerkId,user ? {clerkId:user?.id} : "skip"); //user in db
+    const currentStory = stories[currentIndex];
+
+
+    if (!currentUser || !currentStory) return <Loader/>
+
+      const handleDeleteStory = async () => {
+        try {
+          await deleteStory({ storyId: currentStory.id });
+          currentIndex = currentIndex + 1
+          triggerRefresh();
+          onClose();
+        } catch (error) {
+          console.error("Error deleting story:", error);
+        }
+      };
+
+
     const markAsSeen = async (id: string) => {
         try {
         const seenStories = await AsyncStorage.getItem("seenStories");
@@ -39,7 +60,7 @@ export default function StoriesModal({ visible, onClose, stories, currentIndex, 
     };
 
     useEffect(() => {
-        if (currentIndex === 0) return;
+        if (currentIndex === 0 || currentIndex > stories.length - 1) return;
         markAsSeen(stories[currentIndex].id);
     }, [currentIndex]);
 
@@ -87,6 +108,8 @@ export default function StoriesModal({ visible, onClose, stories, currentIndex, 
     }
   };
 
+  console.log("currentUser._id:", currentUser?._id);
+  console.log("currentStory.userId:", currentStory?.userId);
   return (
   <Modal visible={visible} animationType="slide" transparent={false}>
     <View style={styles.storyModalContainer}>
@@ -112,15 +135,36 @@ export default function StoriesModal({ visible, onClose, stories, currentIndex, 
         ))}
       </View>
 
-      <Image source={{ uri: stories[currentIndex].avatar }} style={styles.storyModalImage} />
-
-      <Text style={styles.storyModalUsername}>
-        {stories[currentIndex].username}
-      </Text>
-
-      <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-        <Ionicons name="close" size={28} color="white" />
-      </TouchableOpacity>
+      
+      <View style={styles.insideStoryHeader}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <Image
+            source={{ uri: currentStory.avatar }}
+            style={styles.insideStoryAvatar}
+          />
+          <Text style={styles.storyModalUsername}>
+            {currentStory.username}
+          </Text>
+        </View>
+        <Pressable onPress={onClose}>
+          {({ pressed }) => (
+            <Ionicons
+              name="close"
+              size={28}
+              color={pressed ? COLORS.primary : COLORS.white}
+            />
+          )}
+        </Pressable>
+      </View>
+      <Image source={{ uri: stories[currentIndex].mediaUrl }} style={styles.storyModalImage} />
+      
+      {currentUser._id === currentStory.userId && (
+        <TouchableOpacity onPress={handleDeleteStory} style={styles.trashButton}>
+          <Ionicons name="trash-outline" size={28} color={COLORS.primary}/>
+        </TouchableOpacity>
+      )}
+      
+      
 
       {/* Navegación por toques a izquierda/derecha */}
       <TouchableOpacity

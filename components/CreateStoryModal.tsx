@@ -19,6 +19,7 @@ export default function CreateStoryModal({ visible, onClose, onSuccess }: Props)
 
   const generateUploadUrl = useMutation(api.posts.generateUploadUrl);
   const createStory = useMutation(api.stories.addStory);
+  
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
