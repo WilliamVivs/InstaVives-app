@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { TouchableOpacity, View, Text, Alert } from "react-native";
+import { COLORS } from "@/constants/theme";
+import { api } from "@/convex/_generated/api";
+import { styles } from "@/styles/notifications.styles";
 import { Ionicons } from "@expo/vector-icons";
+import { useMutation } from "convex/react";
+import { formatDistanceToNow } from "date-fns";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
-import { formatDistanceToNow } from "date-fns";
-import { COLORS } from "@/constants/theme";
-import { styles } from "@/styles/notifications.styles";
-import { api } from "@/convex/_generated/api";
-import { useMutation } from "convex/react";
+import React, { useState } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 import DeleteElementModal from "./DeleteElementModal";
 
 export default function Notification({ notification }: any) {
@@ -39,7 +39,7 @@ export default function Notification({ notification }: any) {
       <TouchableOpacity onLongPress={handleLongPress}>
         <View style={styles.notificationItem}>
           <View style={styles.notificationContent}>
-            <Link href={"/notifications"} asChild>
+            <Link href={`/user/${notification.sender._id}`} asChild>
               <TouchableOpacity style={styles.avatarContainer}>
                 <Image
                   source={notification.sender.image}
@@ -59,7 +59,7 @@ export default function Notification({ notification }: any) {
               </TouchableOpacity>
             </Link>
             <View style={styles.notificationInfo}>
-              <Link href={`/notifications`} asChild>
+              <Link href={`/user/${notification.sender._id}`} asChild>
                 <TouchableOpacity>
                   <Text style={styles.username}>{notification.sender.username}</Text>
                 </TouchableOpacity>
@@ -80,7 +80,7 @@ export default function Notification({ notification }: any) {
           </View>
           
           {notification.post && (
-          <Link href={`/notifications`}>
+          <Link href={`/user/${notification.sender._id}`}>
             <TouchableOpacity>
                 <Image
                 source={notification.post.imageUrl}

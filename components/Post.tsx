@@ -1,6 +1,7 @@
 import { COLORS } from "@/constants/theme";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
+import { useUser } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
 import { useMutation, useQuery } from "convex/react";
 import { formatDistanceToNow } from "date-fns";
@@ -10,7 +11,6 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { styles } from "../styles/feed.styles";
 import CommentsModal from "./CommentsModal";
-import { useUser } from "@clerk/clerk-expo";
 
 type PostProps = {
   post: {
@@ -36,7 +36,11 @@ export default function Post({post}:PostProps) {
     const [likesCount,setLikesCount] = useState(post.likes);
     const [commentsCount,setCommentsCount] = useState(post.comments);
     const [showComments,setShowComments] = useState(false);
-    const [isBookmarked, setIsBookmarked] = useState(post.isBookmarked)
+    const [isBookmarked, setIsBookmarked] = useState(post.isBookmarked);
+    
+    // CAPTION 
+    const [showFullCaption, setShowFullCaption] = useState(false);
+    const [isCaptionTruncated, setIsCaptionTruncated] = useState(false);
 
     const {user} = useUser(); // user in clerk
     const currentUser = useQuery(api.users.getUserByClerkId,user ? {clerkId:user?.id} : "skip"); //user in db
@@ -82,7 +86,7 @@ export default function Post({post}:PostProps) {
     return (
     <View style={styles.post}>
         <View style={styles.postHeader}>
-            <Link href={"/notifications"}>
+            <Link href={`/user/${post.author._id}`} asChild>
                 <TouchableOpacity style={styles.postHeaderLeft}>
                     <Image
                     source={post.author.image}
@@ -117,11 +121,17 @@ export default function Post({post}:PostProps) {
         {/* POST ACTIONS  */}
         <View style={styles.postActions}>
             <View style={styles.postActionsLeft}>
-            <TouchableOpacity onPress={handleLike}>
+            <TouchableOpacity onPress={handleLike} style={styles.postDisplay}>
                 <Ionicons name={isLiked ? "heart" : "heart-outline"} size={24} color={isLiked ? COLORS.primary : COLORS.white}/>
+                <Text style={styles.countPostNumber}>
+                  {likesCount > 0 && `${likesCount.toLocaleString()}`}
+                </Text>
             </TouchableOpacity>
-            <TouchableOpacity  onPress={() => setShowComments(true)}>
+            <TouchableOpacity  onPress={() => setShowComments(true)} style={styles.postDisplay}>
                 <Ionicons name="chatbubble-outline" size={22} color={COLORS.white}/>
+                <Text style={styles.countPostNumber}>
+                  {commentsCount > 0 && `${commentsCount.toLocaleString()}`}
+                </Text>
             </TouchableOpacity>
             </View>
             <TouchableOpacity onPress={handleBookmark}>
@@ -135,13 +145,39 @@ export default function Post({post}:PostProps) {
 
       {/* POST INFO */}
       <View style={styles.postInfo}>
-        <Text style={styles.likesText}>
-          {likesCount > 0 ? `${likesCount.toLocaleString()} likes` : "Be the first to like"}
-        </Text>
         {post.caption && (
           <View style={styles.captionContainer}>
-            <Text style={styles.captionUsername}>{post.author.username}</Text>
-            <Text style={styles.captionText}>{post.caption}</Text>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={() => {
+                if (isCaptionTruncated) {
+                  setShowFullCaption(!showFullCaption);
+                }
+              }}
+            >
+              <Text
+                style={styles.captionCombined}
+                numberOfLines={showFullCaption ? undefined : 1}
+                ellipsizeMode="tail"
+                onTextLayout={(e) => {
+                  const lines = e.nativeEvent.lines;
+                  if (lines.length > 1 && !isCaptionTruncated) {
+                    setIsCaptionTruncated(true);
+                  }
+                }}
+              >
+                <Link href={`/user/${post.author._id}`} asChild>
+                    <Text style={styles.captionUsername}>{post.author.username} </Text>
+                </Link>
+                {post.caption}
+              </Text>
+              {isCaptionTruncated && !showFullCaption && (
+                <Text style={styles.moreButton}>...more</Text>
+              )}
+              {isCaptionTruncated && showFullCaption && (
+                <Text style={styles.moreButton}>less</Text>
+              )}
+            </TouchableOpacity>
           </View>
         )}
 

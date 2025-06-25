@@ -61,4 +61,16 @@ export default defineSchema({
     .index("by_user", ["userId"])
     .index("by_post", ["postId"])
     .index("by_user_and_post", ["userId", "postId"]),
-});
+
+  stories: defineTable({
+    userId: v.id("users"),
+    mediaUrl: v.string(),
+    // mediaType: v.union(v.literal("image"), v.literal("video")),
+    createdAt: v.number(),
+    // expiresAt: v.number(),
+    storageId: v.id("_storage"),
+}).index("by_user", ["userId"])
+// .index("by_expiry", ["expiresAt"]),
+})
+
+

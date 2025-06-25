@@ -47,4 +47,28 @@ export const STORIES = [
     avatar: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400&h=400&fit=crop",
     hasStory: true,
   },
+  {
+    id: "9",
+    username: "mike.rs",
+    avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&h=400&fit=crop",
+    hasStory: true,
+  },
+  {
+    id: "10",
+    username: "jane.d",
+    avatar: "https://images.unsplash.com/photo-1586297135537-94bc9ba060aa?w=400&h=400&fit=crop",
+    hasStory: true,
+  },
+  {
+    id: "11",
+    username: "claudia",
+    avatar: "https://images.unsplash.com/photo-1701615004837-40d8573b6652?w=400&h=400&fit=crop",
+    hasStory: true,
+  },
+  {
+    id: "12",
+    username: "mike.rs",
+    avatar: "https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=400&h=400&fit=crop",
+    hasStory: true,
+  },
 ];

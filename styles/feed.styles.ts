@@ -31,10 +31,19 @@ export const styles = StyleSheet.create({
   },
   storyWrapper: {
     alignItems: "center",
+    position: "relative",
     marginHorizontal: 8,
     width: 72,
   },
-  storyRing: {
+  withoutStoryRing:{
+    width: 68,
+    height: 68,
+    borderRadius: 34,
+    padding: 2,
+    backgroundColor: COLORS.background,
+    marginBottom: 4,
+  },
+  withStoryRing: {
     width: 68,
     height: 68,
     borderRadius: 34,
@@ -58,6 +67,23 @@ export const styles = StyleSheet.create({
     fontSize: 11,
     color: COLORS.white,
     textAlign: "center",
+  },
+   iconBadge: {
+    position: "absolute",
+    bottom: 28,
+    right: 0,
+    backgroundColor: COLORS.white,
+    borderRadius: 50,
+    width: 24,
+    height: 24,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2,
+    borderColor: COLORS.background,
+  },
+  iconBadgeAdd: {
+    color: COLORS.background,
+    fontWeight: 900,
   },
   post: {
     marginBottom: 16,
@@ -102,27 +128,35 @@ export const styles = StyleSheet.create({
   postInfo: {
     paddingHorizontal: 12,
   },
-  likesText: {
-    fontSize: 14,
+  countPostNumber: {
+    fontSize: 16,
     fontWeight: "600",
     color: COLORS.white,
-    marginBottom: 6,
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 3,
+    marginTop: 1,
   },
   captionContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
     marginBottom: 6,
   },
-  captionUsername: {
-    fontSize: 14,
-    fontWeight: "600",
-    color: COLORS.white,
-    marginRight: 6,
+    moreButton: {
+    color: '#aaa',
+    fontSize: 16,
+    marginTop: 2,
   },
-  captionText: {
-    fontSize: 14,
-    color: COLORS.white,
-    flex: 1,
+  captionCombined: {
+    color: 'white',
+    fontSize: 16,
+    flexWrap: 'wrap',
+    lineHeight: 18,
+  },
+  captionUsername: {
+    fontWeight: 'bold',
+    color: 'white',
+    fontSize: 16,
   },
   commentsText: {
     fontSize: 14,
@@ -148,6 +182,14 @@ export const styles = StyleSheet.create({
     height: 56,
     borderBottomWidth: 0.5,
     borderBottomColor: COLORS.surface,
+  },
+  postDisplay: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  likesNumber: {
+    alignItems: "center",
+    justifyContent: "center",
   },
   modalTitle: {
     color: COLORS.white,
