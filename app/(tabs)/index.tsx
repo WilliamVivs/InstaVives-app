@@ -1,15 +1,13 @@
 import { Loader } from '@/components/Loader';
 import Post from '@/components/Post';
-import Story from '@/components/Story';
-import { STORIES } from '@/constants/mock-data';
+import StoriesSection from '@/components/Stories';
 import { COLORS } from '@/constants/theme';
 import { api } from '@/convex/_generated/api';
 import { useAuth } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
-import { useQuery } from 'convex/react';
-import { FlatList, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import { useMutation, useQuery } from 'convex/react';
+import { Button, FlatList, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from "../../styles/feed.styles";
-import StoriesSection from '@/components/Stories';
 
 export default function Index() {
   const {signOut} = useAuth();
@@ -19,11 +17,51 @@ export default function Index() {
   if (posts === undefined) return <Loader />
   if (posts.length === 0) return <NoPostsFound />
 
+  const AddDemoStoriesButton = () => {
+    const addDemoUsersAndStories = useMutation(api.addDemoUser.addDemoUsersAndStories);
+
+    const handleAddDemo = async () => {
+      await addDemoUsersAndStories({
+        users: [
+          {
+            username: "Ana",
+            fullname: "Ana Torres",
+            email: "ana@demo.com",
+            image: "https://randomuser.me/api/portraits/women/1.jpg",
+            clerkId: "demo_ana",
+            mediaUrl: "https://picsum.photos/id/1018/800/1200",
+          },
+          {
+            username: "Luis",
+            fullname: "Luis Pérez",
+            email: "luis@demo.com",
+            image: "https://randomuser.me/api/portraits/men/2.jpg",
+            clerkId: "demo_luis",
+            mediaUrl: "https://picsum.photos/id/1027/800/1200",
+          },
+          {
+            username: "Marta",
+            fullname: "Marta Ruiz",
+            email: "marta@demo.com",
+            image: "https://randomuser.me/api/portraits/women/3.jpg",
+            clerkId: "demo_marta",
+            mediaUrl: "https://picsum.photos/id/1035/800/1200",
+          },
+        ],
+      });
+
+      console.log("Historias demo agregadas");
+    };
+
+    return <Button title="Cargar historias demo" onPress={handleAddDemo} />;
+  };
+
   return (    
     <View style={styles.container}>
       {/* HEADER  */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Instavives</Text>
+        <AddDemoStoriesButton />
         <TouchableOpacity onPress={() => signOut()}>
           <Ionicons name="log-out-outline" size={24} color={COLORS.white}/>
         </TouchableOpacity>

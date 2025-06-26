@@ -33,7 +33,7 @@ type PostProps = {
 export default function Post({post}:PostProps) {
     // const currentUser = useQuery(api.users.getUserByClerkId, user ? { clerkId: user.id } : "skip");
     const [isLiked,setIsLiked] = useState(post.isLiked);
-    const [likesCount,setLikesCount] = useState(post.likes);
+    // const [likesCount,setLikesCount] = useState(post.likes);
     const [commentsCount,setCommentsCount] = useState(post.comments);
     const [showComments,setShowComments] = useState(false);
     const [isBookmarked, setIsBookmarked] = useState(post.isBookmarked);
@@ -50,7 +50,7 @@ export default function Post({post}:PostProps) {
     const deletePost = useMutation(api.posts.deletePost);
 
     const handleNewComment = () => {
-      setCommentsCount(prev => prev + 1);
+      // setCommentsCount(prev => prev + 1);
     };
 
     const handleDelete = async () => {
@@ -67,7 +67,7 @@ export default function Post({post}:PostProps) {
         try {
             const newIsLike = await toggleLike({postId:post._id})
             setIsLiked(newIsLike)
-            setLikesCount((prev) => (newIsLike ? prev + 1 : prev - 1));
+            // setLikesCount((prev) => (newIsLike ? prev + 1 : prev - 1));
         } catch (error) {
             console.error("Error toggling like",error);
             
@@ -124,13 +124,15 @@ export default function Post({post}:PostProps) {
             <TouchableOpacity onPress={handleLike} style={styles.postDisplay}>
                 <Ionicons name={isLiked ? "heart" : "heart-outline"} size={24} color={isLiked ? COLORS.primary : COLORS.white}/>
                 <Text style={styles.countPostNumber}>
-                  {likesCount > 0 && `${likesCount.toLocaleString()}`}
+                  {/* {likesCount > 0 && `${likesCount.toLocaleString()}`} */}
+                  {post.likes > 0 && `${post.likes.toLocaleString()}`}
                 </Text>
             </TouchableOpacity>
             <TouchableOpacity  onPress={() => setShowComments(true)} style={styles.postDisplay}>
                 <Ionicons name="chatbubble-outline" size={22} color={COLORS.white}/>
                 <Text style={styles.countPostNumber}>
-                  {commentsCount > 0 && `${commentsCount.toLocaleString()}`}
+                  {/* {commentsCount > 0 && `${commentsCount.toLocaleString()}`} */}
+                  {post.comments > 0 && `${post.comments .toLocaleString()}`}
                 </Text>
             </TouchableOpacity>
             </View>
@@ -196,7 +198,7 @@ export default function Post({post}:PostProps) {
         postId = {post._id}
         visible = {showComments}
         onClose = {() => setShowComments(false)}
-        onCommentAdded={handleNewComment}
+        // onCommentAdded={handleNewComment}
       />
     </View>
     )

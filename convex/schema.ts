@@ -67,7 +67,10 @@ export default defineSchema({
     mediaUrl: v.string(),
     createdAt: v.number(),
     // expiresAt: v.number(),
-    storageId: v.id("_storage"),
+    storageId: v.union(
+      v.id("_storage"), // id real válido
+      v.string()        // string cualquiera (para demo)
+    )
 }).index("by_user", ["userId"])
 // .index("by_expiry", ["expiresAt"]),
 })

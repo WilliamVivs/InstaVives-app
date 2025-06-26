@@ -5,7 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation, useQuery } from "convex/react";
 import { useEffect, useRef, useState } from "react";
-import { Image, Modal, Pressable, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Image, Modal, Pressable, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "../styles/stories.styles";
 import { Loader } from "./Loader";
 import { StoryType } from "./Story";
@@ -20,7 +20,9 @@ type Props = {
 };
 
 export default function StoriesModal({ visible, onClose, stories, currentIndex, setCurrentIndex,triggerRefresh  }: Props) {
-    const [progress, setProgress] = useState(0);
+    const progressAnim = useRef(new Animated.Value(0)).current;
+    const animationRef = useRef<Animated.CompositeAnimation | null>(null);
+
     const [isClosePressed, setIsClosePressed] = useState(false);
     const [isTrashPressed, setIsTrashPressed] = useState(false);
 
@@ -58,53 +60,69 @@ export default function StoriesModal({ visible, onClose, stories, currentIndex, 
         console.error("Error marking story as seen:", error);
         }
     };
-
+        
     useEffect(() => {
-        if (currentIndex === 0 || currentIndex > stories.length - 1) return;
-        markAsSeen(stories[currentIndex].id);
-    }, [currentIndex]);
+      if (!visible || !stories[currentIndex]) return;
 
-    useEffect(() => {
-        setProgress(0);
-        if (!visible) return;
+      progressAnim.setValue(0);
 
-        markAsSeen(stories[currentIndex].id);
+      animationRef.current = Animated.timing(progressAnim, {
+        toValue: 100,
+        duration: 5000,
+        useNativeDriver: false,
+      });
 
-        // Incrementa progreso cada 50ms
-        intervalRef.current = setInterval(() => {
-        setProgress((old) => {
-            if (old >= 100) {
-            // Avanza a la siguiente historia o cierra modal si es la última
-            if (currentIndex < stories.length - 1) {
-                setCurrentIndex(currentIndex + 1);
-            } else {
-                onClose();
-            }
-            return 0; // resetea
-            }
-            return old + 2; // subir 2% cada 50ms = 2.5s total por historia (ajusta aquí duración)
-        });
-        }, 50);
+      animationRef.current.start(() => {
+        animationRef.current = null;
+        if (currentIndex < stories.length - 1) {
+          if (currentUser._id !== currentStory.userId) {
+            markAsSeen(stories[currentIndex].id);
+          }
+          setCurrentIndex(currentIndex + 1);
+        } else {
+          if (currentUser._id !== currentStory.userId) {
+            markAsSeen(stories[currentIndex].id);
+          }
+          onClose();
+        }
+      });
 
-        // Limpia intervalo al desmontar o cambiar historia
-        return () => {
-        if (intervalRef.current) clearInterval(intervalRef.current);
-        };
+      return () => {
+        if (animationRef.current) {
+          animationRef.current.stop();
+          animationRef.current = null;
+        }
+      };
     }, [currentIndex, visible]);
 
   const handleNext = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
     if (currentIndex < stories.length - 1) {
+      if (currentUser._id !== currentStory.userId){ // if the history isnt ours, we mark the story as seen
+            markAsSeen(stories[currentIndex].id)
+          }
       setCurrentIndex(currentIndex + 1);
-      setProgress(0);
     } else {
+      if (currentUser._id !== currentStory.userId){
+            markAsSeen(stories[currentIndex].id)
+          }
       onClose();
     }
   };
 
   const handlePrev = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
     if (currentIndex > 0) {
+      if (currentUser._id !== currentStory.userId){
+            markAsSeen(stories[currentIndex].id)
+          }
       setCurrentIndex(currentIndex - 1);
-      setProgress(0);
     }
   };
 
@@ -113,28 +131,22 @@ export default function StoriesModal({ visible, onClose, stories, currentIndex, 
   return (
   <Modal visible={visible} animationType="slide" transparent={false}>
     <View style={styles.storyModalContainer}>
-
       {/* Barra de progreso */}
       <View style={styles.progressBarContainer}>
-        {stories.map((_, index) => (
-          <View key={index} style={styles.progressBar}>
-            <View
-              style={[
-                styles.progressBarFill,
-                {
-                  width:
-                    index < currentIndex
-                      ? '100%'
-                      : index === currentIndex
-                      ? `${progress * 100}%`
-                      : '0%',
-                },
-              ]}
-            />
-          </View>
-        ))}
+        <View style={styles.progressBar}>
+          <Animated.View
+            style={[
+              styles.progressBarFill,
+              {
+                width: progressAnim.interpolate({
+                  inputRange: [0, 100],
+                  outputRange: ['0%', '100%'],
+                }),
+              },
+            ]}
+          />
+        </View>
       </View>
-
       
       <View style={styles.insideStoryHeader}>
         <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>

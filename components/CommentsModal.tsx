@@ -16,17 +16,19 @@ import {
   View,
 } from "react-native";
 import Comment from "./Comment";
-import { Loader } from "./Loader";
 import DeleteElementModal from "./DeleteElementModal";
+import { Loader } from "./Loader";
 
 type CommentsModal = {
   postId: Id<"posts">;
   visible: boolean;
   onClose: () => void;
-  onCommentAdded?: () => void;
+  // onCommentAdded?: () => void;
 };
 
-export default function CommentsModal({ onClose, postId, visible,onCommentAdded }: CommentsModal) {
+// export default function CommentsModal({ onClose, postId, visible,onCommentAdded }: CommentsModal) {
+export default function CommentsModal({ onClose, postId, visible }: CommentsModal) {
+
   const [newComment, setNewComment] = useState("");
   const comments = useQuery(api.comments.getComments, { postId });
   const addComment = useMutation(api.comments.addComment);
@@ -75,7 +77,7 @@ export default function CommentsModal({ onClose, postId, visible,onCommentAdded 
       });
 
       setNewComment("");
-      onCommentAdded?.();
+      // onCommentAdded?.();
     } catch (error) {
       console.log("Error adding comment:", error);
     }
