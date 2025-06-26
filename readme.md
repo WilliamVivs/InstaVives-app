@@ -43,8 +43,9 @@ Built using a robust mobile-first tech stack, InstaVives is a fully functional a
 - 📲 Live updates with no manual polling needed
 
 ---
-
-## 🖼️ Screenshots
+<p align="center">
+  <h1 align="center"> 🖼️ Screenshots </h1><br/>
+</p>
 <p align="center">
   <strong>🔐 Login Page</strong><br/>
   <img src="public/images/login_page.jpeg" alt="Login Page" width="300"/>
