@@ -5,7 +5,7 @@ import * as FileSystem from 'expo-file-system';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
 import React, { useState } from 'react';
-import { ActivityIndicator, Button, Modal, Text, TouchableOpacity, View } from 'react-native';
+import { ActivityIndicator, Modal, Text, TouchableOpacity, View } from 'react-native';
 
 type Props = {
   visible: boolean;
@@ -72,10 +72,12 @@ export default function CreateStoryModal({ visible, onClose, onSuccess }: Props)
     >
       <View style={styles.overlay}>
         <View style={styles.modal}>
-          <Text style={styles.title}>Nueva historia</Text>
+          <Text style={styles.title}>New Story</Text>
 
           {!selectedImage ? (
-            <Button title="Select Image" onPress={pickImage} />
+            <TouchableOpacity onPress={pickImage}  style={styles.buttons}>
+                  <Text style={styles.textButton}>SELECT IMAGE</Text> 
+              </TouchableOpacity>
           ) : (
             <>
               <Image
@@ -83,7 +85,9 @@ export default function CreateStoryModal({ visible, onClose, onSuccess }: Props)
                 style={styles.image}
                 contentFit="cover"
               />
-              <Button title="Change Image" onPress={pickImage} />
+              <TouchableOpacity onPress={pickImage}  style={styles.buttons}>
+                  <Text style={styles.textButton}>CHANGE IMAGE</Text> 
+              </TouchableOpacity>
             </>
           )}
 
@@ -92,12 +96,16 @@ export default function CreateStoryModal({ visible, onClose, onSuccess }: Props)
               <ActivityIndicator size="small" />
             ) : (
               <>
-                <Button title="Subir historia" onPress={handleUpload} disabled={!selectedImage} />
+                <TouchableOpacity onPress={handleUpload} disabled={!selectedImage}  style={styles.buttons}>
+                  <Text style={styles.textButton}>UPLOAD STORY</Text> 
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => {
                   setSelectedImage(null);
                   onClose();
                 }}>
-                  <Text style={styles.cancelText}>Cancelar</Text>
+
+                    <Text style={styles.cancelText}>Cancel</Text>
+
                 </TouchableOpacity>
               </>
             )}

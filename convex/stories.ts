@@ -80,7 +80,7 @@ export const getAllStories = query({
           userId: story.userId,
           mediaUrl: story.mediaUrl,
           createdAt: story.createdAt,
-          username: user?.username || "unknown",
+          username: user?.fullname || "unknown",
           avatar: user?.image, 
           hasStory: true, // por defecto true si existe
         };

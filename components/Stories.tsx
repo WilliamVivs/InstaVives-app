@@ -16,7 +16,6 @@ const StoriesSection = () => {
   const [refresh, setRefresh] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [viewingOwnStory, setViewingOwnStory] = useState(false);
-  const [activeStoryIndex, setActiveStoryIndex] = useState<number | null>(null);
 
   const { userId } = useAuth();
   const currentUser = useQuery(api.users.getUserByClerkId, userId ? { clerkId: userId } : 'skip');
@@ -63,7 +62,7 @@ const StoriesSection = () => {
           <View style={styles.iconBadge}>
             <Ionicons name="add" size={15} style={styles.iconBadgeAdd} />
           </View>
-          <Text style={styles.storyUsername}>{currentUser.username}</Text>
+          <Text style={styles.storyUsername} numberOfLines={1} ellipsizeMode="tail">{currentUser.fullname}</Text>
         </TouchableOpacity>
       );
     }

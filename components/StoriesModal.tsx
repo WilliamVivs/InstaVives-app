@@ -2,10 +2,10 @@ import { COLORS } from "@/constants/theme";
 import { api } from "@/convex/_generated/api";
 import { useUser } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useMutation, useQuery } from "convex/react";
-import { useEffect, useRef, useState } from "react";
-import { Animated, Image, Modal, Pressable, Text, TouchableOpacity, View } from "react-native";
+import { Link } from 'expo-router';
+import { useEffect, useRef } from "react";
+import { Animated, Image, Modal, Text, TouchableOpacity, View } from "react-native";
 import { styles } from "../styles/stories.styles";
 import { Loader } from "./Loader";
 import { StoryType } from "./Story";
@@ -22,9 +22,6 @@ type Props = {
 export default function StoriesModal({ visible, onClose, stories, currentIndex, setCurrentIndex,triggerRefresh  }: Props) {
     const progressAnim = useRef(new Animated.Value(0)).current;
     const animationRef = useRef<Animated.CompositeAnimation | null>(null);
-
-    const [isClosePressed, setIsClosePressed] = useState(false);
-    const [isTrashPressed, setIsTrashPressed] = useState(false);
 
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const deleteStory = useMutation(api.stories.deleteStory);
@@ -47,18 +44,11 @@ export default function StoriesModal({ visible, onClose, stories, currentIndex, 
       };
 
 
-    const markAsSeen = async (id: string) => {
-        try {
-        const seenStories = await AsyncStorage.getItem("seenStories");
-        const seenArray = seenStories ? JSON.parse(seenStories) : [];
-
-        if (!seenArray.includes(id)) {
-            const updated = [...seenArray, id];
-            await AsyncStorage.setItem("seenStories", JSON.stringify(updated));
-        }
-        } catch (error) {
-        console.error("Error marking story as seen:", error);
-        }
+    const stopAnimation = () => {
+      if (animationRef.current) {
+        animationRef.current.stop();
+        animationRef.current = null;
+      }
     };
         
     useEffect(() => {
@@ -75,14 +65,8 @@ export default function StoriesModal({ visible, onClose, stories, currentIndex, 
       animationRef.current.start(() => {
         animationRef.current = null;
         if (currentIndex < stories.length - 1) {
-          if (currentUser._id !== currentStory.userId) {
-            markAsSeen(stories[currentIndex].id);
-          }
           setCurrentIndex(currentIndex + 1);
         } else {
-          if (currentUser._id !== currentStory.userId) {
-            markAsSeen(stories[currentIndex].id);
-          }
           onClose();
         }
       });
@@ -96,32 +80,21 @@ export default function StoriesModal({ visible, onClose, stories, currentIndex, 
     }, [currentIndex, visible]);
 
   const handleNext = () => {
+    stopAnimation();
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
     if (currentIndex < stories.length - 1) {
-      if (currentUser._id !== currentStory.userId){ // if the history isnt ours, we mark the story as seen
-            markAsSeen(stories[currentIndex].id)
-          }
       setCurrentIndex(currentIndex + 1);
     } else {
-      if (currentUser._id !== currentStory.userId){
-            markAsSeen(stories[currentIndex].id)
-          }
       onClose();
     }
   };
 
   const handlePrev = () => {
-    if (intervalRef.current) {
-      clearInterval(intervalRef.current);
-      intervalRef.current = null;
-    }
+    stopAnimation();
     if (currentIndex > 0) {
-      if (currentUser._id !== currentStory.userId){
-            markAsSeen(stories[currentIndex].id)
-          }
       setCurrentIndex(currentIndex - 1);
     }
   };
@@ -130,63 +103,64 @@ export default function StoriesModal({ visible, onClose, stories, currentIndex, 
   console.log("currentStory.userId:", currentStory?.userId);
   return (
   <Modal visible={visible} animationType="slide" transparent={false}>
-    <View style={styles.storyModalContainer}>
-      {/* Barra de progreso */}
-      <View style={styles.progressBarContainer}>
-        <View style={styles.progressBar}>
-          <Animated.View
-            style={[
-              styles.progressBarFill,
-              {
-                width: progressAnim.interpolate({
-                  inputRange: [0, 100],
-                  outputRange: ['0%', '100%'],
-                }),
-              },
-            ]}
-          />
-        </View>
+  <View style={styles.storyModalContainer}>
+    {/* Progress Bar */}
+    <View style={styles.progressBarContainer}>
+      <View style={styles.progressBar}>
+        <Animated.View
+          style={[
+            styles.progressBarFill,
+            {
+              width: progressAnim.interpolate({
+                inputRange: [0, 100],
+                outputRange: ['0%', '100%'],
+              }),
+            },
+          ]} 
+        />
       </View>
-      
-      <View style={styles.insideStoryHeader}>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
-          <Image
-            source={{ uri: currentStory.avatar }}
-            style={styles.insideStoryAvatar}
-          />
-          <Text style={styles.storyModalUsername}>
-            {currentStory.username}
-          </Text>
-        </View>
-        <Pressable onPress={onClose}>
-          {({ pressed }) => (
-            <Ionicons
-              name="close"
-              size={28}
-              color={pressed ? COLORS.primary : COLORS.white}
-            />
-          )}
-        </Pressable>
+    </View>
+
+    {/* Header */}
+    <View style={styles.insideStoryHeader}>
+      <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+        <Link href={currentStory.userId === currentUser?._id ? "/profile" : `/user/${currentStory.userId}`} asChild>
+          <TouchableOpacity onPress={onClose} style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+            <Image
+              source={{ uri: currentStory.avatar }}
+              style={styles.insideStoryAvatar}
+              />
+            <Text style={styles.storyModalUsername}>
+              {currentStory.username}
+            </Text>
+          </TouchableOpacity>
+        </Link>
+
       </View>
-      <Image source={{ uri: stories[currentIndex].mediaUrl }} style={styles.storyModalImage} />
-      
+      <TouchableOpacity onPress={onClose}>
+          <Ionicons name="close" size={28} color={COLORS.primary}/>
+        </TouchableOpacity>
+    </View>
+      <View style={styles.storyImageContainer}>
+    <Image
+      source={{ uri: stories[currentIndex].mediaUrl }}
+      style={styles.storyModalImage}
+      />
       {currentUser._id === currentStory.userId && (
         <TouchableOpacity onPress={handleDeleteStory} style={styles.trashButton}>
-          <Ionicons name="trash-outline" size={28} color={COLORS.primary}/>
+          <Ionicons name="trash-outline" size={28} color={COLORS.primary} />
         </TouchableOpacity>
       )}
-      
-      
-
-      {/* Navegación por toques a izquierda/derecha */}
+      {/* Navigate throw the image */}
       <TouchableOpacity
         onPress={handlePrev}
-        style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '40%' }}
+        style={styles.imageNavLeft}
       />
       <TouchableOpacity
         onPress={handleNext}
-        style={{ position: 'absolute', right: 0, top: 0, bottom: 0, width: '60%' }}
+        style={styles.imageNavRight}
       />
+    </View>
     </View>
   </Modal>
 );

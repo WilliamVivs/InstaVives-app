@@ -1,6 +1,7 @@
 import { COLORS } from "@/constants/theme";
 import { useFonts } from 'expo-font';
 import { SplashScreen } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { useCallback } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import InitialLayout from "../components/InitialLayout";
@@ -25,6 +26,7 @@ export default function RootLayout() {
             <InitialLayout />
           </SafeAreaView>
         </SafeAreaProvider>
+        <StatusBar style="light"/>
     </ClerkAndConvexProvider>
   )
 };

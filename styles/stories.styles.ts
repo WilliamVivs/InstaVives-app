@@ -40,7 +40,9 @@ export const styles = StyleSheet.create({
     backgroundColor: "black",
     justifyContent: "center",
     alignItems: "center",
-    position: "absolute",
+    paddingTop: 40,
+    flex: 1,
+    zIndex: 10,
   },
   storyModalImage: {
     width: "100%",
@@ -50,7 +52,7 @@ export const styles = StyleSheet.create({
   },
   trashButton: {
     position: "absolute",
-    bottom: 40,
+    bottom: 50,
     right: 20,
     zIndex: 10,
     padding: 8,
@@ -61,15 +63,14 @@ export const styles = StyleSheet.create({
   },
   progressBarContainer: {
   flexDirection: 'row',
-  position: 'absolute',
+  display:"flex",
   top: 20,
-  left: 10,
-  right: 10,
-  height: 4,
-  justifyContent: 'space-between',
-  zIndex: 10,
+  width: "90%",
+  alignItems: "center",
+  justifyContent: 'center',
+  marginHorizontal: 16,
+  marginBottom: 20,
   },
-
   progressBar: {
     flexBasis: 0,      // Para que el ancho venga del flexGrow y flexShrink
     flexGrow: 1,       // Cada barra ocupa igual parte del ancho total
@@ -89,36 +90,41 @@ export const styles = StyleSheet.create({
   //create modal
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.4)',
+    backgroundColor: 'rgba(0,0,0,0.6)',
     justifyContent: 'center',
     alignItems: 'center',
   },
   modal: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 20,
+    backgroundColor: COLORS.background,
+    borderRadius: 25,
+    padding: 30,
     width: '85%',
+    display: "flex",
+    gap: 3,
+
   },
   title: {
-    fontSize: 18,
+    fontSize: 25,
     fontWeight: 'bold',
-    marginBottom: 12,
+    marginBottom: 25,
     textAlign: 'center',
+    color: COLORS.primary
   },
   image: {
     width: '100%',
-    height: 200,
+    height: 300,
     borderRadius: 8,
     marginBottom: 10,
   },
   actions: {
-    marginTop: 10,
+    marginTop: 12,
     gap: 10,
   },
   cancelText: {
     textAlign: 'center',
     color: 'red',
     marginTop: 8,
+    fontSize: 15,
   },
   insideStoryAvatar: {
     borderRadius:50,
@@ -126,13 +132,13 @@ export const styles = StyleSheet.create({
     height: 30,
   },
     insideStoryHeader: {
-    marginTop: 120,
+    marginTop: 20,
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center", // <-- Añade esto
     width: "100%",        // <-- Añade esto para ocupar todo el ancho
-    paddingHorizontal: 16, // Opcional: para separar de los bordes
-    gap: 12,
+    paddingHorizontal: 16,
+    marginBottom: -10,
   },
   storyModalUsername: {
   color: "white",
@@ -142,5 +148,39 @@ export const styles = StyleSheet.create({
   },
   closeButton: {
     color: COLORS.primary
-  }
+  },
+  buttons: {
+    padding: 10,
+    width: "100%",
+    backgroundColor: COLORS.primary,
+    color: COLORS.background,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  textButton: {
+    fontSize: 14,
+    fontWeight: 600,
+    alignItems: "center",
+    color: COLORS.white,
+  },
+  storyImageContainer: {
+  width: "100%",
+  height: "100%",
+},
+imageNavLeft: {
+  position: "absolute",
+  left: 0,
+  top: 0,
+  width: "49%",
+  height: "100%",
+  zIndex: 2,
+},
+imageNavRight: {
+  position: "absolute",
+  right: 0,
+  top: 0,
+  width: "49%",
+  height: "100%",
+  zIndex: 2,
+},
 });

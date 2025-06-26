@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
     borderColor: COLORS.background,
   },
   storyUsername: {
-    fontSize: 11,
+    fontSize: 12,
     color: COLORS.white,
     textAlign: "center",
   },

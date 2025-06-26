@@ -6,21 +6,31 @@ import { api } from '@/convex/_generated/api';
 import { useAuth } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
 import { useMutation, useQuery } from 'convex/react';
-import { Button, FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { useState } from 'react';
+import { Button, FlatList, RefreshControl, Text, TouchableOpacity, View } from 'react-native';
 import { styles } from "../../styles/feed.styles";
 
 export default function Index() {
   const {signOut} = useAuth();
+  const [refreshing, setRefreshing] = useState(false);
 
   const posts = useQuery(api.posts.getFeedPosts)
 
   if (posts === undefined) return <Loader />
   if (posts.length === 0) return <NoPostsFound />
 
+  const onRefresh = () => {
+    setRefreshing(true)
+    setTimeout(() => {
+      setRefreshing(false)
+    },2000)
+
+  }
+
   const AddDemoStoriesButton = () => {
     const addDemoUsersAndStories = useMutation(api.addDemoUser.addDemoUsersAndStories);
 
-    const handleAddDemo = async () => {
+    const handleAddDemo = async () => { //just a simple story demo for example pruposes, all logic is implemented for creating and deleting stories
       await addDemoUsersAndStories({
         users: [
           {
@@ -61,7 +71,7 @@ export default function Index() {
       {/* HEADER  */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Instavives</Text>
-        <AddDemoStoriesButton />
+        {/* <AddDemoStoriesButton /> */}
         <TouchableOpacity onPress={() => signOut()}>
           <Ionicons name="log-out-outline" size={24} color={COLORS.white}/>
         </TouchableOpacity>
@@ -74,6 +84,13 @@ export default function Index() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{paddingBottom: 60}}
         ListHeaderComponent={<StoriesSection/>}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={COLORS.primary}
+          />
+        }
       />
     </View>
   );
