@@ -117,24 +117,25 @@ Built using a robust mobile-first tech stack, InstaVives is a fully functional a
 ```bash
 git clone https://github.com/your-username/InstaVives.git
 cd InstaVives
+```
 
 ### 2. Install dependences
 ```bash
 npm i
-
+```
 ### 3. Create .env.local file in the root directory
 ```bash
 EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=<your_expo_clerk_key>
 CONVEX_DEPLOYMENT=<your_convex_dev_src>
 EXPO_PUBLIC_CONVEX_URL=<your_public_convex_url>
 NODE_ENV=developement
-
+```
 ### 4. Run the app
 *Open 2 terminals and run on each*
 ```bash
 npx convex dev
 npx expo start
-
+```
 
 
 
