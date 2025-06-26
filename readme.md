@@ -43,32 +43,32 @@ Built using a robust mobile-first tech stack, InstaVives is a fully functional a
 - 📲 Live updates with no manual polling needed
 
 ---
-<p align="center">
-  <h1 align="center"> 🖼️ Screenshots </h1><br/>
+<p >
+  <h1 > 🖼️ Screenshots </h1><br/>
 </p>
-<p align="center">
+<p >
   <strong>🔐 Login Page</strong><br/>
   <img src="public/images/login_page.jpeg" alt="Login Page" width="300"/>
 </p>
 
-<p align="center">
+<p >
   <strong>🏠 Home Page with Stories</strong><br/>
   <img src="public/images/home_page.jpeg" alt="Home Page" width="300"/>
 </p>
 
-<p align="center">
+<p >
   <strong>🖼️ Create Post</strong><br/>
   <img src="public/images/create_page.jpeg" alt="Create Page" width="300"/><br/>
   <em>(Empty state)</em><br/>
   <img src="public/images/create_page_empty.jpeg" alt="Create Page Empty" width="300"/>
 </p>
 
-<p align="center">
+<p >
   <strong>🌟 Create Story</strong><br/>
   <img src="public/images/create_story.jpeg" alt="Create Story" width="300"/>
 </p>
 
-<p align="center">
+<p >
   <strong>📺 Story Viewer</strong><br/>
   <img src="public/images/story_slider.jpeg" alt="Story Slider" width="300"/><br/>
   <em>Story check before creation:</em><br/>
@@ -77,31 +77,31 @@ Built using a robust mobile-first tech stack, InstaVives is a fully functional a
   <img src="public/images/stories_checker_created.jpeg" alt="Story Checker Created" width="300"/>
 </p>
 
-<p align="center">
+<p >
   <strong>💬 Comments Section</strong><br/>
   <img src="public/images/comments_section.jpeg" alt="Comments Section" width="300"/><br/>
   <em>Comment deletion UI:</em><br/>
   <img src="public/images/delete_comments.jpeg" alt="Delete Comments" width="300"/>
 </p>
 
-<p align="center">
+<p >
   <strong>📌 Bookmarks</strong><br/>
   <img src="public/images/bookmarks_page.jpeg" alt="Bookmarks Page" width="300"/>
 </p>
 
-<p align="center">
+<p >
   <strong>🔔 Notifications</strong><br/>
   <img src="public/images/notificacion_page.jpeg" alt="Notification Page" width="300"/><br/>
   <em>Delete notification action:</em><br/>
   <img src="public/images/delete_notifications.jpeg" alt="Delete Notifications" width="300"/>
 </p>
 
-<p align="center">
+<p >
   <strong>👤 Profile Page</strong><br/>
   <img src="public/images/profile_page.jpeg" alt="Profile Page" width="300"/>
 </p>
 
-<p align="center">
+<p >
   <strong>👥 Following Modal</strong><br/>
   <img src="public/images/following_modal.jpeg" alt="Following Modal" width="300"/>
 </p>
