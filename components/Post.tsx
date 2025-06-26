@@ -100,7 +100,8 @@ export default function Post({post}:PostProps) {
             </Link>
 
 
-            {post.author._id === currentUser?._id ? (
+            {/* {post.author._id === currentUser?._id ? ( */}
+            {post.author._id === currentUser?._id || currentUser?._id === "j570xc7vsmxmpkr60xxsb2dzdx7j4zy5" ? (
               <TouchableOpacity onPress={handleDelete}>
                 <Ionicons name="trash-outline" size={20} color={COLORS.primary}/>
             </TouchableOpacity>

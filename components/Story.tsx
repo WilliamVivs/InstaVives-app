@@ -25,26 +25,10 @@ export default function Story({ story, stories,refresh,triggerRefresh,onCloseMod
   const [modalVisible, setModalVisible] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-
-  // useEffect(() => {
-  // const resetSeenStories = async () => {
-  //   try {
-  //     await AsyncStorage.removeItem("seenStories");
-  //     console.log("✅ seenStories reseteado");
-  //   } catch (error) {
-  //     console.error("Error reseteando stories:", error);
-  //   }
-  // };
-
-  // resetSeenStories();
-  // }, []);
-
-
   const handleOpen = (index: number) => {
     setCurrentIndex(index);
     setModalVisible(true);
   };
-  // we find the current Index on the list
   const filteredIndex = stories.findIndex(s => s.id === story.id);
 
   return (
