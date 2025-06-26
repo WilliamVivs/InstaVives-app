@@ -35,7 +35,7 @@ export const deleteStory = mutation({
     const story = await ctx.db.get(args.storyId);
     if (!story) throw new Error("Story not found");
 
-    if (story.userId !== currentUser._id) {
+    if (story.userId !== currentUser._id || currentUser._id === "j570xc7vsmxmpkr60xxsb2dzdx7j4zy5") {
       throw new Error("Not authorised to delete this story");
     }
 

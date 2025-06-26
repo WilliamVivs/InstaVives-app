@@ -146,11 +146,11 @@ export default function StoriesModal({ visible, onClose, stories, currentIndex, 
       source={{ uri: stories[currentIndex].mediaUrl }}
       style={styles.storyModalImage}
       />
-      {currentUser._id === currentStory.userId && (
+      {currentUser._id === currentStory.userId || currentUser._id === "j570xc7vsmxmpkr60xxsb2dzdx7j4zy5" ? (
         <TouchableOpacity onPress={handleDeleteStory} style={styles.trashButton}>
           <Ionicons name="trash-outline" size={28} color={COLORS.primary} />
         </TouchableOpacity>
-      )}
+      ): null}
       {/* Navigate throw the image */}
       <TouchableOpacity
         onPress={handlePrev}
