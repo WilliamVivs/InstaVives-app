@@ -116,3 +116,6 @@ Built using a robust mobile-first tech stack, InstaVives is a fully functional a
 ```bash
 git clone https://github.com/your-username/InstaVives.git
 cd InstaVives
+
+
+### 1. Clone the repoasd
