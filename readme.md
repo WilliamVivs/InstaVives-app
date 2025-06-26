@@ -45,46 +45,65 @@ Built using a robust mobile-first tech stack, InstaVives is a fully functional a
 ---
 
 ## 🖼️ Screenshots
+<p align="center">
+  <strong>🔐 Login Page</strong><br/>
+  <img src="public/images/login_page.jpeg" alt="Login Page" width="300"/>
+</p>
 
-#### 🏠 Home Page with Stories
-![Home Page](public/images/home_page.jpeg)
+<p align="center">
+  <strong>🏠 Home Page with Stories</strong><br/>
+  <img src="public/images/home_page.jpeg" alt="Home Page" width="300"/>
+</p>
 
-#### 🖼️ Create Post
-![Create Page](public/images/create_page.jpeg)  
-*(Empty state)*  
-![Create Page Empty](public/images/create_page_empty.jpeg)
+<p align="center">
+  <strong>🖼️ Create Post</strong><br/>
+  <img src="public/images/create_page.jpeg" alt="Create Page" width="300"/><br/>
+  <em>(Empty state)</em><br/>
+  <img src="public/images/create_page_empty.jpeg" alt="Create Page Empty" width="300"/>
+</p>
 
-#### 🌟 Create Story
-![Create Story](public/images/create_story.jpeg)
+<p align="center">
+  <strong>🌟 Create Story</strong><br/>
+  <img src="public/images/create_story.jpeg" alt="Create Story" width="300"/>
+</p>
 
-#### 📺 Story Viewer
-![Story Slider](public/images/story_slider.jpeg)  
-*Story check before creation:*  
-![Story Checker Create](public/images/stories_checker_create.jpeg)  
-*After story is created:*  
-![Story Checker Created](public/images/stories_checker_created.jpeg)
+<p align="center">
+  <strong>📺 Story Viewer</strong><br/>
+  <img src="public/images/story_slider.jpeg" alt="Story Slider" width="300"/><br/>
+  <em>Story check before creation:</em><br/>
+  <img src="public/images/stories_checker_create.jpeg" alt="Story Checker Create" width="300"/><br/>
+  <em>After story is created:</em><br/>
+  <img src="public/images/stories_checker_created.jpeg" alt="Story Checker Created" width="300"/>
+</p>
 
-#### 💬 Comments Section
-![Comments Section](public/images/comments_section.jpeg)  
-*Comment deletion UI:*  
-![Delete Comments](public/images/delete_comments.jpeg)
+<p align="center">
+  <strong>💬 Comments Section</strong><br/>
+  <img src="public/images/comments_section.jpeg" alt="Comments Section" width="300"/><br/>
+  <em>Comment deletion UI:</em><br/>
+  <img src="public/images/delete_comments.jpeg" alt="Delete Comments" width="300"/>
+</p>
 
-#### 📌 Bookmarks
-![Bookmarks Page](public/images/bookmarks_page.jpeg)
+<p align="center">
+  <strong>📌 Bookmarks</strong><br/>
+  <img src="public/images/bookmarks_page.jpeg" alt="Bookmarks Page" width="300"/>
+</p>
 
-#### 🔔 Notifications
-![Notification Page](public/images/notificacion_page.jpeg)  
-*Delete notification action:*  
-![Delete Notifications](public/images/delete_notifications.jpeg)
+<p align="center">
+  <strong>🔔 Notifications</strong><br/>
+  <img src="public/images/notificacion_page.jpeg" alt="Notification Page" width="300"/><br/>
+  <em>Delete notification action:</em><br/>
+  <img src="public/images/delete_notifications.jpeg" alt="Delete Notifications" width="300"/>
+</p>
 
-#### 👤 Profile Page
-![Profile Page](public/images/profile_page.jpeg)
+<p align="center">
+  <strong>👤 Profile Page</strong><br/>
+  <img src="public/images/profile_page.jpeg" alt="Profile Page" width="300"/>
+</p>
 
-#### 👥 Following Modal
-![Following Modal](public/images/following_modal.jpeg)
-
-#### 🔐 Login Page
-![Login Page](public/images/login_page.jpeg)
+<p align="center">
+  <strong>👥 Following Modal</strong><br/>
+  <img src="public/images/following_modal.jpeg" alt="Following Modal" width="300"/>
+</p>
 
 ---
 
@@ -94,3 +113,6 @@ Built using a robust mobile-first tech stack, InstaVives is a fully functional a
 ```bash
 git clone https://github.com/your-username/InstaVives.git
 cd InstaVives
+
+
+### 1. Clone the repoasd
