@@ -1,6 +1,6 @@
 # 📸 InstaVives – Mobile Social Media App (React Native + Expo)
 
-Welcome to **InstaVives**, a modern mobile social media platform where users can **share moments in real time** through photos, stories, likes, and comments.
+Welcome to **InstaVives**, a modern mobile social media platform where users can **share moments in real time**.
 
 Built using a robust mobile-first tech stack, InstaVives is a fully functional and dynamic social app that emphasizes **clean UI/UX**, **smooth user interactions**, and **real-time engagement**.
 
@@ -9,7 +9,7 @@ Built using a robust mobile-first tech stack, InstaVives is a fully functional a
 ## 🚀 Features
 
 ✅ Post creation with image upload  
-✅ Temporary Stories (à la Instagram)  
+✅ Stories 
 ✅ Real-time post & story feed  
 ✅ Bookmarks for saving content  
 ✅ Like, comment, and follow system  
