@@ -47,29 +47,29 @@ Built using a robust mobile-first tech stack, InstaVives is a fully functional a
   <h1 > 🖼️ Screenshots </h1><br/>
 </p>
 <p >
-  <strong>🔐 Login Page</strong><br/>
+  <h3>🔐 Login Page</h3><br/>
   <img src="public/images/login_page.jpeg" alt="Login Page" width="300"/>
 </p>
 
 <p >
-  <strong>🏠 Home Page with Stories</strong><br/>
+  <h3>🏠 Home Page with Stories</h3><br/>
   <img src="public/images/home_page.jpeg" alt="Home Page" width="300"/>
 </p>
 
 <p >
-  <strong>🖼️ Create Post</strong><br/>
+  <h3>🖼️ Create Post</h3><br/>
   <img src="public/images/create_page.jpeg" alt="Create Page" width="300"/><br/>
   <em>(Empty state)</em><br/>
   <img src="public/images/create_page_empty.jpeg" alt="Create Page Empty" width="300"/>
 </p>
 
 <p >
-  <strong>🌟 Create Story</strong><br/>
+  <h3>🌟 Create Story</h3><br/>
   <img src="public/images/create_story.jpeg" alt="Create Story" width="300"/>
 </p>
 
 <p >
-  <strong>📺 Story Viewer</strong><br/>
+  <h3>📺 Story Viewer</h3><br/>
   <img src="public/images/story_slider.jpeg" alt="Story Slider" width="300"/><br/>
   <em>Story check before creation:</em><br/>
   <img src="public/images/stories_checker_create.jpeg" alt="Story Checker Create" width="300"/><br/>
@@ -78,31 +78,31 @@ Built using a robust mobile-first tech stack, InstaVives is a fully functional a
 </p>
 
 <p >
-  <strong>💬 Comments Section</strong><br/>
+  <h3>💬 Comments Section</h3><br/>
   <img src="public/images/comments_section.jpeg" alt="Comments Section" width="300"/><br/>
   <em>Comment deletion UI:</em><br/>
   <img src="public/images/delete_comments.jpeg" alt="Delete Comments" width="300"/>
 </p>
 
 <p >
-  <strong>📌 Bookmarks</strong><br/>
+  <h3>📌 Bookmarks</h3><br/>
   <img src="public/images/bookmarks_page.jpeg" alt="Bookmarks Page" width="300"/>
 </p>
 
 <p >
-  <strong>🔔 Notifications</strong><br/>
+  <h3>🔔 Notifications</h3><br/>
   <img src="public/images/notificacion_page.jpeg" alt="Notification Page" width="300"/><br/>
   <em>Delete notification action:</em><br/>
   <img src="public/images/delete_notifications.jpeg" alt="Delete Notifications" width="300"/>
 </p>
 
 <p >
-  <strong>👤 Profile Page</strong><br/>
+  <h3>👤 Profile Page</h3><br/>
   <img src="public/images/profile_page.jpeg" alt="Profile Page" width="300"/>
 </p>
 
 <p >
-  <strong>👥 Following Modal</strong><br/>
+  <h3>👥 Following Modal</h3><br/>
   <img src="public/images/following_modal.jpeg" alt="Following Modal" width="300"/>
 </p>
 
@@ -118,5 +118,26 @@ Built using a robust mobile-first tech stack, InstaVives is a fully functional a
 git clone https://github.com/your-username/InstaVives.git
 cd InstaVives
 
+### 2. Install dependences
+```bash
+npm i
 
-### 1. Clone the repoasd
+### 3. Create .env.local file in the root directory
+```bash
+EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY=<your_expo_clerk_key>
+CONVEX_DEPLOYMENT=<your_convex_dev_src>
+EXPO_PUBLIC_CONVEX_URL=<your_public_convex_url>
+NODE_ENV=developement
+
+### 4. Run the app
+*Open 2 terminals and run on each*
+```bash
+npx convex dev
+npx expo start
+
+
+
+
+
+
+
